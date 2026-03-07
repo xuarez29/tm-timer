@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#000"/>
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#00cc44" stroke-width="16"/>
+  <!-- Clock face marks -->
+  <line x1="256" y1="60"  x2="256" y2="96"  stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+  <line x1="256" y1="416" x2="256" y2="452" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+  <line x1="60"  y1="256" x2="96"  y2="256" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+  <line x1="416" y1="256" x2="452" y2="256" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+  <!-- Minute hand -->
+  <line x1="256" y1="256" x2="256" y2="110" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+  <!-- Hour hand -->
+  <line x1="256" y1="256" x2="340" y2="200" stroke="#00cc44" stroke-width="14" stroke-linecap="round"/>
+  <!-- Centre dot -->
+  <circle cx="256" cy="256" r="14" fill="#fff"/>
+  <!-- TM text -->
+  <text x="256" y="380" text-anchor="middle" fill="#666" font-family="system-ui,sans-serif" font-size="52" font-weight="700">TM</text>
+</svg>

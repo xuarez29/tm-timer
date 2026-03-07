@@ -1,0 +1,231 @@
+/* ── HomeScreen layout ──────────────────────────────────────────────────── */
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #0d0d0d;
+  color: #fff;
+  padding: 0 16px;
+  /* respect notch / home-indicator */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.header {
+  text-align: center;
+  padding: 28px 0 20px;
+}
+
+.logo {
+  width: clamp(140px, 50vw, 200px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  /* Slight drop shadow so el logo resalta sobre el fondo oscuro */
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
+}
+
+.tagline {
+  font-size: 0.78rem;
+  color: #555;
+  font-weight: 500;
+  margin-top: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* ── Card list ───────────────────────────────────────────────────────────── */
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+/* Base card */
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: #1c1c1e;
+  border: 1px solid #2c2c2e;
+  border-radius: 18px;
+  padding: 18px 20px;
+  color: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s, transform 0.08s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.card:active {
+  background: #2a2a2c;
+  transform: scale(0.985);
+}
+
+.cardAlt {
+  border-color: #383838;
+}
+
+.cardIcon {
+  font-size: 1.9rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.cardName {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.cardSub {
+  font-size: 0.82rem;
+  color: #777;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ── Variable panel overrides ─────────────────────────────────────────────── */
+.variablePanel {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding: 20px;
+}
+
+.variablePanel .cardIcon {
+  text-align: center;
+  width: 100%;
+}
+
+.variablePanel .cardName {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.stepBtn {
+  background: #2e2e30;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 300;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.1s;
+}
+
+.stepBtn:active { background: #444; }
+
+.stepValue {
+  font-size: 3rem;
+  font-weight: 800;
+  min-width: 56px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.variableActions {
+  display: flex;
+  gap: 10px;
+}
+
+.cancelBtn {
+  flex: 1;
+  padding: 14px;
+  background: #2e2e30;
+  border: none;
+  color: #aaa;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.1s;
+}
+
+.cancelBtn:active { background: #3a3a3c; }
+
+.goBtn {
+  flex: 2;
+  padding: 14px;
+  background: #2a6e2a;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.1s;
+}
+
+.goBtn:active { background: #3a8a3a; }
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.footer {
+  padding: 16px 0 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.shareBtn {
+  background: transparent;
+  border: 1px solid #333;
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 10px 24px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.1s, color 0.1s;
+}
+
+.shareBtn:active {
+  border-color: #555;
+  color: #999;
+}
+
+/* ── Landscape adjustments ───────────────────────────────────────────────── */
+@media (orientation: landscape) and (max-height: 500px) {
+  .header {
+    padding: 10px 0 8px;
+  }
+
+  .logo {
+    width: clamp(80px, 20vw, 120px);
+  }
+
+  .card {
+    padding: 12px 18px;
+  }
+
+  .cardList {
+    gap: 7px;
+  }
+}
