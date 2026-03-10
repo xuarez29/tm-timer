@@ -2,7 +2,7 @@
 // TimerScreen.jsx — Full-screen timer display with colour changes
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { getTimerState, formatTime } from '../utils/timerConfig';
 import { useTimer } from '../hooks/useTimer';
 import styles from './TimerScreen.module.css';
@@ -26,6 +26,7 @@ const STATE_LABELS = {
 export default function TimerScreen({ mode, onBack }) {
   const { elapsed, status, start, pause, resume, reset, stop } = useTimer();
   const wakeLockRef = useRef(null);
+  const [hideNumbers, setHideNumbers] = useState(false);
 
   const timerState = getTimerState(elapsed, mode.thresholds);
   const { bg, text } = PALETTE[timerState];
@@ -72,6 +73,11 @@ export default function TimerScreen({ mode, onBack }) {
     onBack();
   };
 
+  const handleReset = () => {
+    setHideNumbers(false);
+    reset();
+  };
+
   const isIdle    = status === 'idle';
   const isRunning = status === 'running';
   const isPaused  = status === 'paused';
@@ -107,12 +113,18 @@ export default function TimerScreen({ mode, onBack }) {
 
       {/* ── Timer display ────────────────────────────────────────────────── */}
       <div className={styles.display}>
-        <span className={styles.time} aria-live="off">
+        <span
+          className={`${styles.time} ${hideNumbers ? styles.hidden : ''}`}
+          aria-live="off"
+        >
           {formatTime(elapsed)}
         </span>
 
         {/* State label — only show once timer has a meaningful state */}
-        <span className={styles.stateLabel} style={{ opacity: timerState !== 'black' ? 1 : 0 }}>
+        <span
+          className={styles.stateLabel}
+          style={{ opacity: timerState !== 'black' && !hideNumbers ? 1 : 0 }}
+        >
           {STATE_LABELS[timerState] ?? ''}
         </span>
       </div>
@@ -152,13 +164,23 @@ export default function TimerScreen({ mode, onBack }) {
 
         {/* Secondary actions: only visible once started */}
         {hasStarted && (
-          <button
-            className={styles.btn}
-            style={{ color: text, borderColor: `${text}44`, background: `${text}10` }}
-            onClick={reset}
-          >
-            ↺ Reiniciar
-          </button>
+          <>
+            <button
+              className={styles.btn}
+              style={{ color: text, borderColor: `${text}44`, background: `${text}10` }}
+              onClick={() => setHideNumbers((h) => !h)}
+            >
+              {hideNumbers ? '◉ Mostrar' : '○ Ocultar'}
+            </button>
+
+            <button
+              className={styles.btn}
+              style={{ color: text, borderColor: `${text}44`, background: `${text}10` }}
+              onClick={handleReset}
+            >
+              ↺ Reiniciar
+            </button>
+          </>
         )}
 
         <button

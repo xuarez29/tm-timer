@@ -85,6 +85,10 @@
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .stateLabel {
   font-size: clamp(0.75rem, 3vw, 1rem);
   font-weight: 500;
