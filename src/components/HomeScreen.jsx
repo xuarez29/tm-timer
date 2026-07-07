@@ -42,6 +42,14 @@ const ClockIcon = () => (
   </svg>
 );
 
+const BellIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+  </svg>
+);
+
 const ChevronRight = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
     strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -70,7 +78,7 @@ const PRESET_CARDS = [
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export default function HomeScreen({ onSelectMode }) {
+export default function HomeScreen({ onSelectMode, onOpenBell }) {
   const [variableMinutes,   setVariableMinutes]   = useState(5);
   const [showVariablePanel, setShowVariablePanel] = useState(false);
 
@@ -172,6 +180,20 @@ export default function HomeScreen({ onSelectMode }) {
             </div>
           </div>
         )}
+
+        {/* ── Bell (Ah-Counter) — set apart from the timer cards ── */}
+        <button className={`${styles.card} ${styles.bellCard}`} onClick={onOpenBell}>
+          <span className={`${styles.iconBox} ${styles.bellIconBox}`}>
+            <BellIcon />
+          </span>
+          <span className={styles.cardBody}>
+            <span className={styles.cardName}>Campanilla</span>
+            <span className={styles.cardDuration}>Marca las muletillas</span>
+          </span>
+          <span className={styles.chevron}>
+            <ChevronRight />
+          </span>
+        </button>
       </main>
 
       {/* ── Footer ── */}

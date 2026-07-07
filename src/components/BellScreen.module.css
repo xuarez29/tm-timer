@@ -1,0 +1,190 @@
+/* ── Design tokens (shared with HomeScreen) ──────────────────────────────── */
+.screen {
+  --bg:            #0A0A0A;
+  --surface:       #141414;
+  --border:        rgba(255, 255, 255, 0.1);
+  --text-1:        #F0F0F0;
+  --text-2:        #666;
+  --accent:        #4F8FD0;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--bg);
+  color: var(--text-1);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ── Top bar ─────────────────────────────────────────────────────────────── */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  gap: 12px;
+}
+
+/* Same shape/size as TimerScreen's .topBtn, coloured for this screen's dark bg */
+.topBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: var(--text-1);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  min-height: 42px;
+  min-width: 72px;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.1s;
+  white-space: nowrap;
+}
+
+.topBtn:active {
+  opacity: 0.6;
+}
+
+.heading {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+}
+
+/* Balances the back button so the heading stays centred */
+.spacer {
+  width: 68px;
+}
+
+/* ── Main / big bell button ──────────────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  padding: 24px;
+}
+
+/* ── Sound selector ──────────────────────────────────────────────────────── */
+.soundSelector {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.soundOption {
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  color: var(--text-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+
+.soundOptionActive {
+  background: rgba(79, 143, 208, 0.18);
+  color: var(--accent);
+}
+
+.bellButton {
+  width: min(62vw, 260px);
+  height: min(62vw, 260px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 36%,
+      rgba(79, 143, 208, 0.28),
+      rgba(79, 143, 208, 0.06) 68%),
+    var(--surface);
+  border: 1px solid rgba(79, 143, 208, 0.4);
+  color: var(--accent);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow:
+    0 0 0 1px rgba(79, 143, 208, 0.12),
+    0 14px 50px rgba(79, 143, 208, 0.16),
+    0 4px 16px rgba(0, 0, 0, 0.5);
+  transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.bellButton svg {
+  width: 44%;
+  height: 44%;
+}
+
+.bellButton:active {
+  transform: scale(0.94);
+  color: #7fb4e6;
+  box-shadow:
+    0 0 0 1px rgba(79, 143, 208, 0.5),
+    0 0 60px rgba(79, 143, 208, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  letter-spacing: 0.2px;
+  text-align: center;
+}
+
+.counter {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.3px;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.footer {
+  padding: 20px 18px 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.resetBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 200px;
+  min-height: 58px;
+  padding: 14px 16px;
+  background: rgba(79, 143, 208, 0.1);
+  border: 1px solid rgba(79, 143, 208, 0.44);
+  border-radius: 14px;
+  color: var(--accent);
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.12s, transform 0.08s;
+}
+
+.resetBtn:active:not(:disabled) {
+  opacity: 0.55;
+  transform: scale(0.96);
+}
+
+.resetBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

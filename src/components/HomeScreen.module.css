@@ -165,6 +165,37 @@
 }
 
 
+/* ── Bell card (amber accent — distinct from the blue timer cards) ────────── */
+.bellCard {
+  margin-top: 16px; /* set apart from the timer cards */
+  border-color: rgba(214, 158, 74, 0.28);
+  background:
+    linear-gradient(rgba(214, 158, 74, 0.04), rgba(214, 158, 74, 0.04)),
+    var(--surface);
+}
+
+.bellCard:active {
+  background: #1a140a;
+  border-color: rgba(214, 158, 74, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(214, 158, 74, 0.22),
+    0 4px 24px rgba(214, 158, 74, 0.16);
+}
+
+.bellIconBox {
+  background: rgba(214, 158, 74, 0.12);
+  color: rgba(214, 158, 74, 0.75);
+}
+
+.bellCard:active .bellIconBox {
+  background: rgba(214, 158, 74, 0.24);
+  color: #e0aa5a;
+}
+
+.bellCard:active .chevron {
+  color: rgba(214, 158, 74, 0.55);
+}
+
 /* ── Variable panel (expanded) ───────────────────────────────────────────── */
 .variablePanel {
   flex-direction: column;
