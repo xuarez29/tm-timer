@@ -90,6 +90,18 @@ export default function BellScreen({ onBack }) {
     if (!audioCtxRef.current) {
       const Ctx = window.AudioContext || window.webkitAudioContext;
       audioCtxRef.current = new Ctx();
+
+      // iOS: by default Web Audio counts as "ambient" audio, so the phone's
+      // physical silent switch mutes it (it only escapes via Bluetooth/AirPlay).
+      // Declaring the session as "playback" makes the bell behave like media
+      // playback — it rings through the built-in speaker even on silent mode.
+      if ('audioSession' in navigator) {
+        try {
+          navigator.audioSession.type = 'playback';
+        } catch {
+          /* not supported on this browser — falls back to default routing */
+        }
+      }
     }
     return audioCtxRef.current;
   };
