@@ -176,16 +176,31 @@ export default function BellScreen({ onBack }) {
     return audioCtxRef.current;
   };
 
-  const playSound = (id) => {
+  const playSound = async (id) => {
     const sound = SOUNDS.find((s) => s.id === id);
     if (!sound?.play) return; // silence
-    const ctx = getCtx();
-    // iOS/Safari suspends the context until a user gesture resumes it
-    if (ctx.state === 'suspended') ctx.resume();
-    sound.play(ctx);
+
+    try {
+      const ctx = getCtx();
+
+      // iOS suspends the context whenever the app goes to the background. A
+      // suspended context's clock is frozen, so scheduling against
+      // ctx.currentTime would place the ring in the past and drop it — resume
+      // has to finish first.
+      if (ctx.state === 'suspended') await ctx.resume();
+
+      // Closed by the cleanup while we were awaiting the resume
+      if (ctx.state === 'closed') return;
+
+      sound.play(ctx);
+    } catch {
+      /* audio unavailable — the count still goes up, which is what matters */
+    }
   };
 
   const handleRing = () => {
+    // Deliberately not awaited: the counter must react to the tap instantly,
+    // even if the audio context takes a moment to wake up.
     playSound(soundId);
     setCount((c) => c + 1);
   };
