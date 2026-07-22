@@ -23,7 +23,13 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // PascalCase names are components rendered as JSX (which the base
+      // no-unused-vars rule can't see) — ignore them as vars *and* as
+      // destructured params, e.g. ({ mode, Icon, label }) => <Icon />.
+      'no-unused-vars': [
+        'error',
+        { varsIgnorePattern: '^[A-Z_]', argsIgnorePattern: '^[A-Z_]' },
+      ],
     },
   },
 ])
