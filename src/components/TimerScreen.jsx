@@ -7,9 +7,11 @@ import { getTimerState, formatTime } from '../utils/timerConfig';
 import { useTimer } from '../hooks/useTimer';
 import styles from './TimerScreen.module.css';
 
-/* Background and text colour per timer state */
+/* Background and text colour per timer state.
+   Idle sits on the app's navy ground; the semaphore states stay pure so the
+   colour reads unambiguously from the back of the room. */
 const PALETTE = {
-  black:  { bg: '#000000', text: '#ffffff' },
+  black:  { bg: '#08192A', text: '#F4EDE2' },
   green:  { bg: '#00cc44', text: '#000000' },
   yellow: { bg: '#ffcc00', text: '#000000' },
   red:    { bg: '#dd1111', text: '#ffffff' },
@@ -23,10 +25,34 @@ const STATE_LABELS = {
   blink:  '¡Tiempo excedido!',
 };
 
+/* The Fullscreen API is unavailable on iPhone Safari, so the control is only
+   offered on pointer devices where it actually does something. */
+const isDesktop = () =>
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+const HomeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M3 11l9-7 9 7"/>
+    <path d="M5 9.5V20h14V9.5"/>
+    <path d="M9.5 20v-5h5v5"/>
+  </svg>
+);
+
+const FullscreenIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/>
+  </svg>
+);
+
 export default function TimerScreen({ mode, onBack }) {
   const { elapsed, status, start, pause, resume, reset, stop } = useTimer();
   const wakeLockRef = useRef(null);
   const [hideNumbers, setHideNumbers] = useState(false);
+  const [showFullscreen] = useState(isDesktop);
 
   const timerState = getTimerState(elapsed, mode.thresholds);
   const { bg, text } = PALETTE[timerState];
@@ -83,6 +109,8 @@ export default function TimerScreen({ mode, onBack }) {
   const isPaused  = status === 'paused';
   const hasStarted = !isIdle;
 
+  const edge = `${text}55`;
+
   return (
     <div
       className={`${styles.screen} ${isBlink ? styles.blink : ''}`}
@@ -93,22 +121,28 @@ export default function TimerScreen({ mode, onBack }) {
         <button
           className={styles.topBtn}
           onClick={onBack}
-          style={{ color: text, borderColor: `${text}55` }}
+          style={{ color: text, borderColor: edge }}
           aria-label="Volver al menú"
         >
-          ← Menú
+          <HomeIcon />
         </button>
 
         <span className={styles.modeName}>{mode.name}</span>
 
-        <button
-          className={styles.topBtn}
-          onClick={toggleFullscreen}
-          style={{ color: text, borderColor: `${text}55` }}
-          aria-label="Pantalla completa"
-        >
-          ⛶
-        </button>
+        {showFullscreen ? (
+          <button
+            className={styles.topBtn}
+            onClick={toggleFullscreen}
+            style={{ color: text, borderColor: edge }}
+            aria-label="Pantalla completa"
+            title="Pantalla completa"
+          >
+            <FullscreenIcon />
+          </button>
+        ) : (
+          /* Keeps the mode name optically centred */
+          <span className={styles.topSpacer} aria-hidden="true" />
+        )}
       </div>
 
       {/* ── Timer display ────────────────────────────────────────────────── */}
@@ -184,7 +218,7 @@ export default function TimerScreen({ mode, onBack }) {
         )}
 
         <button
-          className={styles.btn}
+          className={`${styles.btn} ${styles.btnWide}`}
           style={{ color: text, borderColor: `${text}44`, background: `${text}10` }}
           onClick={handleFinish}
         >

@@ -1,239 +1,191 @@
-/* ── Design tokens ────────────────────────────────────────────────────────── */
-.screen {
-  --bg:             #0A0A0A;
-  --surface:        #141414;
-  --surface-active: #1C1C1C;
-  --border:         rgba(255, 255, 255, 0.07);
-  --border-strong:  rgba(255, 255, 255, 0.11);
-  --text-1:         #F0F0F0;
-  --text-2:         #666;
-  --accent:         #4F8FD0;
-  --accent-border:  rgba(79, 143, 208, 0.32);
-  --accent-surface: rgba(79, 143, 208, 0.07);
-  --accent-icon:    rgba(79, 143, 208, 0.14);
-  --r-card:         16px;
-  --r-icon:         12px;
-}
-
 /* ── Screen ──────────────────────────────────────────────────────────────── */
 .screen {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
-  background-color: var(--bg);
-  color: var(--text-1);
+  height: 100dvh;
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: var(--navy);
+  color: var(--cream);
+  overflow: hidden;
   padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* ── Header ──────────────────────────────────────────────────────────────── */
-.header {
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 29vh;
+  min-height: 172px;
+  max-height: 240px;
+  flex: none;
+  overflow: hidden;
+}
+
+/* Logo bleeds off the right edge; the scrim keeps the wordmark legible */
+.heroLogo {
+  position: absolute;
+  top: 50%;
+  right: -4%;
+  transform: translateY(-50%);
+  height: 118%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.55));
+}
+
+.heroScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    var(--navy) 22%,
+    rgba(8, 25, 42, 0.5) 44%,
+    rgba(8, 25, 42, 0) 70%
+  );
+}
+
+.heroContent {
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 52%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 36px 24px 24px;
-  gap: 8px;
+  justify-content: flex-end;
+  padding-bottom: 32px;
 }
 
-.logo {
-  width: auto;
-  max-height: 52px;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
-}
-
-.title {
-  font-size: 1.2rem;
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 40px;
   font-weight: 600;
-  letter-spacing: -0.2px;
-  color: var(--text-1);
-  margin-top: 6px;
+  letter-spacing: -0.6px;
+  line-height: 0.92;
 }
 
-.subtitle {
-  font-size: 0.72rem;
-  font-weight: 400;
-  color: var(--text-2);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+.wordmarkAccent {
+  color: var(--gold);
 }
 
-/* ── Card list ───────────────────────────────────────────────────────────── */
-.cardList {
+/* The final "o" of "Cronómetro", drawn as a clock face */
+.wordmarkClock {
+  display: inline-block;
+  vertical-align: -5px;
+  margin-left: 1px;
+  color: var(--gold);
+}
+
+.wordmarkClock svg {
+  width: 30px;
+  height: 30px;
+}
+
+.heroRule {
+  width: 36px;
+  height: 2px;
+  background: var(--gold);
+  margin-top: 14px;
+}
+
+/* ── Mode list ───────────────────────────────────────────────────────────── */
+.list {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  padding: 4px 18px 0;
+  padding: 8px 22px 0;
+  overflow-y: auto;
 }
 
-/* ── Card base ───────────────────────────────────────────────────────────── */
-.card {
+.row {
   display: flex;
   align-items: center;
   gap: 14px;
-  background: var(--surface);
-  border: 1px solid rgba(79, 143, 208, 0.18);
-  border-radius: var(--r-card);
-  padding: 15px 16px 15px 15px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 4px;
   text-align: left;
   cursor: pointer;
+  color: var(--cream);
   font-family: inherit;
-  color: var(--text-1);
   width: 100%;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s ease, border-color 0.15s ease,
-              box-shadow 0.15s ease, transform 0.08s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  transition: background 0.12s ease;
 }
 
-.card:active {
-  background: #0C1620;
-  border-color: rgba(79, 143, 208, 0.55);
-  transform: scale(0.983);
-  box-shadow:
-    0 0 0 1px rgba(79, 143, 208, 0.2),
-    0 4px 24px rgba(79, 143, 208, 0.14);
+.row:active {
+  background: var(--fill-soft);
 }
 
-.card:active .iconBox {
-  background: rgba(79, 143, 208, 0.22);
-  color: var(--accent);
-}
-
-.card:active .chevron {
-  color: rgba(79, 143, 208, 0.55);
-}
-
-/* ── Icon box ────────────────────────────────────────────────────────────── */
-.iconBox {
+.rowIcon {
+  width: 30px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: var(--r-icon);
-  background: rgba(79, 143, 208, 0.1);
-  color: rgba(79, 143, 208, 0.65);
-  transition: background 0.15s, color 0.15s;
+  color: var(--gold);
 }
 
-.iconBox svg {
-  width: 19px;
-  height: 19px;
+.rowIcon svg {
+  width: 26px;
+  height: 26px;
 }
 
-
-/* ── Card body ───────────────────────────────────────────────────────────── */
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.rowBody {
   flex: 1;
   min-width: 0;
 }
 
-.cardName {
-  font-size: 0.975rem;
-  font-weight: 600;
-  letter-spacing: -0.1px;
-  color: var(--text-1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
+.rowName {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.25;
 }
 
-.cardDuration {
-  font-size: 0.76rem;
-  font-weight: 400;
-  color: var(--text-2);
-  letter-spacing: 0.1px;
+.rowDuration {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 1px;
 }
 
-/* ── Chevron ────────────────────────────────────────────────────────────── */
 .chevron {
   display: flex;
   align-items: center;
-  color: rgba(255, 255, 255, 0.18);
+  color: var(--gold);
 }
 
 .chevron svg {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
 }
 
-
-/* ── Bell card (amber accent — distinct from the blue timer cards) ────────── */
-.bellCard {
-  margin-top: 16px; /* set apart from the timer cards */
-  border-color: rgba(214, 158, 74, 0.28);
-  background:
-    linear-gradient(rgba(214, 158, 74, 0.04), rgba(214, 158, 74, 0.04)),
-    var(--surface);
-}
-
-.bellCard:active {
-  background: #1a140a;
-  border-color: rgba(214, 158, 74, 0.6);
-  box-shadow:
-    0 0 0 1px rgba(214, 158, 74, 0.22),
-    0 4px 24px rgba(214, 158, 74, 0.16);
-}
-
-.bellIconBox {
-  background: rgba(214, 158, 74, 0.12);
-  color: rgba(214, 158, 74, 0.75);
-}
-
-.bellCard:active .bellIconBox {
-  background: rgba(214, 158, 74, 0.24);
-  color: #e0aa5a;
-}
-
-.bellCard:active .chevron {
-  color: rgba(214, 158, 74, 0.55);
-}
-
-/* ── Variable panel (expanded) ───────────────────────────────────────────── */
+/* ── Variable panel (expanded in place of the row) ───────────────────────── */
 .variablePanel {
-  flex-direction: column;
-  align-items: stretch;
-  gap: 14px;
-  padding: 16px 16px 16px 15px;
-}
-
-.variablePanelHeader {
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--line);
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .stepper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 6px;
-  gap: 6px;
 }
 
 .stepBtn {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text-1);
-  font-size: 1.25rem;
-  font-weight: 300;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: var(--fill-soft);
+  border: 1px solid rgba(244, 237, 226, 0.12);
+  border-radius: var(--r-md);
+  color: var(--cream);
+  font-size: 20px;
   cursor: pointer;
   font-family: inherit;
   -webkit-tap-highlight-color: transparent;
@@ -241,14 +193,13 @@
 }
 
 .stepBtn:active {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(244, 237, 226, 0.14);
 }
 
 .stepValue {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--text-1);
-  letter-spacing: -0.5px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
   flex: 1;
   text-align: center;
 }
@@ -260,37 +211,36 @@
 
 .cancelBtn {
   flex: 1;
-  padding: 11px;
+  padding: 12px;
   background: transparent;
-  border: 1px solid var(--border-strong);
-  border-radius: 12px;
-  color: var(--text-2);
-  font-size: 0.875rem;
-  font-weight: 500;
-  font-family: inherit;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  font-family: inherit;
   -webkit-tap-highlight-color: transparent;
   transition: background 0.1s;
 }
 
 .cancelBtn:active {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--fill-soft);
 }
 
 .goBtn {
   flex: 2;
-  padding: 11px;
-  background: var(--accent);
+  padding: 12px;
+  background: var(--blue);
   border: none;
-  border-radius: 12px;
-  color: #ffffff;
-  font-size: 0.9rem;
+  border-radius: var(--r-md);
+  color: #fff;
+  font-size: 14px;
   font-weight: 700;
-  font-family: inherit;
   cursor: pointer;
+  font-family: inherit;
   -webkit-tap-highlight-color: transparent;
   transition: opacity 0.1s;
-  letter-spacing: 0.15px;
 }
 
 .goBtn:active {
@@ -299,96 +249,131 @@
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 .footer {
-  padding: 20px 18px 28px;
+  flex: none;
+  padding: 16px 22px max(24px, env(safe-area-inset-bottom));
+}
+
+/* The bell is the one solid-gold call to action on the screen */
+.bellBtn {
+  width: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  background: var(--gold);
+  border: none;
+  border-radius: var(--r-lg);
+  padding: 16px;
+  cursor: pointer;
+  color: var(--navy);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.12s, transform 0.08s;
+}
+
+.bellBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.bellBtn:active {
+  opacity: 0.85;
+  transform: scale(0.985);
 }
 
 .shareBtn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 28px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50px;
-  color: var(--text-2);
-  font-size: 0.84rem;
-  font-weight: 500;
-  font-family: inherit;
+  gap: 6px;
+  margin: 12px auto 0;
+  padding: 5px 8px;
+  background: none;
+  border: none;
   cursor: pointer;
+  color: var(--muted-dim);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-family: inherit;
   -webkit-tap-highlight-color: transparent;
-  transition: border-color 0.15s, color 0.15s;
-  letter-spacing: 0.1px;
+  transition: color 0.15s;
 }
 
 .shareBtn svg {
-  width: 15px;
-  height: 15px;
+  width: 12px;
+  height: 12px;
 }
 
 .shareBtn:active {
-  border-color: rgba(255, 255, 255, 0.24);
-  color: var(--text-1);
+  color: var(--cream);
 }
 
 /* ── Very small screens ──────────────────────────────────────────────────── */
 @media (max-width: 360px) {
-  .header {
-    padding: 28px 20px 20px;
+  .heroContent {
+    left: 18px;
   }
-  .logo {
-    max-height: 44px;
+  .wordmark {
+    font-size: 34px;
   }
-  .cardList {
-    padding: 4px 14px 0;
-    gap: 8px;
+  .wordmarkClock svg {
+    width: 26px;
+    height: 26px;
   }
-  .card {
-    padding: 13px 14px 13px 13px;
+  .list {
+    padding: 6px 16px 0;
   }
-  .cardName {
-    font-size: 0.9rem;
+  .row {
+    padding: 14px 4px;
   }
-}
-
-/* ── Tall screens (extra breathing room) ─────────────────────────────────── */
-@media (min-height: 750px) {
-  .header {
-    padding: 44px 24px 28px;
-  }
-  .cardList {
-    gap: 11px;
+  .rowName {
+    font-size: 17px;
   }
   .footer {
-    padding: 24px 18px 36px;
+    padding: 14px 16px max(20px, env(safe-area-inset-bottom));
   }
 }
 
-/* ── Landscape (compact mode) ────────────────────────────────────────────── */
+/* ── Landscape (compact) ─────────────────────────────────────────────────── */
 @media (orientation: landscape) and (max-height: 500px) {
-  .header {
-    padding: 10px 24px 8px;
-    flex-direction: row;
-    gap: 16px;
-    justify-content: center;
+  .screen {
+    max-width: 720px;
   }
-  .logo {
-    max-height: 36px;
+  .hero {
+    height: 22vh;
+    min-height: 96px;
   }
-  .title {
-    font-size: 1rem;
-    margin-top: 0;
+  /* Scale the badge up so it still reads as a deliberate bleed rather than
+     a logo that happens to be clipped mid-wordmark */
+  .heroLogo {
+    height: 190%;
+    right: -8%;
   }
-  .subtitle {
-    display: none;
+  .heroContent {
+    padding-bottom: 14px;
   }
-  .cardList {
-    gap: 7px;
-    padding: 0 14px;
+  .wordmark {
+    font-size: 28px;
   }
-  .card {
-    padding: 11px 14px;
+  .wordmarkClock svg {
+    width: 21px;
+    height: 21px;
+  }
+  .heroRule {
+    margin-top: 8px;
+  }
+  .row {
+    padding: 11px 4px;
+  }
+  .footer {
+    padding: 10px 22px max(14px, env(safe-area-inset-bottom));
+  }
+  .bellBtn {
+    min-height: 48px;
+    padding: 12px;
   }
 }

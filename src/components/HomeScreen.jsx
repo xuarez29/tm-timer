@@ -43,7 +43,7 @@ const ClockIcon = () => (
 );
 
 const BellIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"
     strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
     <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
@@ -58,13 +58,22 @@ const ChevronRight = () => (
 );
 
 const ShareIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"
     strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <circle cx="18" cy="5"  r="3"/>
     <circle cx="6"  cy="12" r="3"/>
     <circle cx="18" cy="19" r="3"/>
     <line x1="8.59"  y1="13.51" x2="15.42" y2="17.49"/>
     <line x1="15.41" y1="6.51"  x2="8.59"  y2="10.49"/>
+  </svg>
+);
+
+/* The wordmark's final "o" is drawn as a clock face */
+const WordmarkClock = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9"/>
+    <polyline points="12 7 12 12 15.5 14"/>
   </svg>
 );
 
@@ -89,7 +98,7 @@ export default function HomeScreen({ onSelectMode, onOpenBell }) {
   const handleShare = async () => {
     if (navigator.share) {
       await navigator.share({
-        title: 'Toastmasters Timer',
+        title: 'Cronómetro Toastmasters',
         text: 'Temporizador para sesiones de Toastmasters',
         url: window.location.href,
       }).catch(() => {});
@@ -102,27 +111,36 @@ export default function HomeScreen({ onSelectMode, onOpenBell }) {
   return (
     <div className={styles.screen}>
 
-      {/* ── Header ── */}
-      <header className={styles.header}>
-        <img src="/logo.png" alt="Toastmasters International" className={styles.logo} />
-        <h1 className={styles.title}>Toastmasters Timer</h1>
-        <p className={styles.subtitle}>Selecciona un formato</p>
+      {/* ── Hero: logo bleeding off the right edge, wordmark over it ── */}
+      <header className={styles.hero}>
+        <img src="/logo.png" alt="Toastmasters International" className={styles.heroLogo} />
+        <div className={styles.heroScrim} aria-hidden="true" />
+        <div className={styles.heroContent}>
+          <h1 className={styles.wordmark} aria-label="Cronómetro">
+            <span aria-hidden="true">
+              Cronó<br />
+              <span className={styles.wordmarkAccent}>metr</span>
+              <span className={styles.wordmarkClock}><WordmarkClock /></span>
+            </span>
+          </h1>
+          <span className={styles.heroRule} aria-hidden="true" />
+        </div>
       </header>
 
-      {/* ── Mode cards ── */}
-      <main className={styles.cardList}>
+      {/* ── Mode list ── */}
+      <main className={styles.list}>
         {PRESET_CARDS.map(({ mode, Icon, label }) => (
           <button
             key={mode.id}
-            className={styles.card}
+            className={styles.row}
             onClick={() => onSelectMode(mode)}
           >
-            <span className={styles.iconBox}>
+            <span className={styles.rowIcon}>
               <Icon />
             </span>
-            <span className={styles.cardBody}>
-              <span className={styles.cardName}>{mode.name}</span>
-              <span className={styles.cardDuration}>{label}</span>
+            <span className={styles.rowBody}>
+              <span className={styles.rowName}>{mode.name}</span>
+              <span className={styles.rowDuration}>{label}</span>
             </span>
             <span className={styles.chevron}>
               <ChevronRight />
@@ -130,32 +148,25 @@ export default function HomeScreen({ onSelectMode, onOpenBell }) {
           </button>
         ))}
 
-        {/* ── Variable time card ── */}
+        {/* ── Variable time row ── */}
         {!showVariablePanel ? (
           <button
-            className={styles.card}
+            className={styles.row}
             onClick={() => setShowVariablePanel(true)}
           >
-            <span className={styles.iconBox}>
+            <span className={styles.rowIcon}>
               <ClockIcon />
             </span>
-            <span className={styles.cardBody}>
-              <span className={styles.cardName}>Tiempo Variable</span>
-              <span className={styles.cardDuration}>Personalizado</span>
+            <span className={styles.rowBody}>
+              <span className={styles.rowName}>Tiempo Variable</span>
+              <span className={styles.rowDuration}>Personalizado</span>
             </span>
             <span className={styles.chevron}>
               <ChevronRight />
             </span>
           </button>
         ) : (
-          <div className={`${styles.card} ${styles.variablePanel}`}>
-            <div className={styles.variablePanelHeader}>
-              <span className={styles.iconBox}>
-                <ClockIcon />
-              </span>
-              <span className={styles.cardName}>¿Cuántos minutos?</span>
-            </div>
-
+          <div className={styles.variablePanel}>
             <div className={styles.stepper}>
               <button
                 className={styles.stepBtn}
@@ -180,24 +191,15 @@ export default function HomeScreen({ onSelectMode, onOpenBell }) {
             </div>
           </div>
         )}
-
-        {/* ── Bell (Ah-Counter) — set apart from the timer cards ── */}
-        <button className={`${styles.card} ${styles.bellCard}`} onClick={onOpenBell}>
-          <span className={`${styles.iconBox} ${styles.bellIconBox}`}>
-            <BellIcon />
-          </span>
-          <span className={styles.cardBody}>
-            <span className={styles.cardName}>Campanilla</span>
-            <span className={styles.cardDuration}>Marca las muletillas</span>
-          </span>
-          <span className={styles.chevron}>
-            <ChevronRight />
-          </span>
-        </button>
       </main>
 
-      {/* ── Footer ── */}
+      {/* ── Footer: bell as the primary secondary-action ── */}
       <footer className={styles.footer}>
+        <button className={styles.bellBtn} onClick={onOpenBell}>
+          <BellIcon />
+          Campanilla
+        </button>
+
         <button className={styles.shareBtn} onClick={handleShare}>
           <ShareIcon />
           Compartir app

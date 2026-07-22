@@ -7,23 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
 
     <!-- PWA / mobile shell metadata -->
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#08192A" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="TM Timer" />
+    <meta name="apple-mobile-web-app-title" content="Cronómetro" />
 
     <!-- SEO -->
     <meta name="description" content="Temporizador visual con colores para sesiones de Toastmasters." />
 
     <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-    <link rel="apple-touch-icon" href="/icon.svg" />
+    <!-- iOS ignores SVG here; it needs a real PNG or it falls back to a page screenshot -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Preload the fonts used above the fold (self-hosted, offline-safe) -->
+    <link rel="preload" href="/fonts/zillaslab-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- PWA manifest -->
     <link rel="manifest" href="/manifest.json" />
 
-    <title>Toastmasters Timer</title>
+    <title>Cronómetro Toastmasters</title>
   </head>
   <body>
     <div id="root"></div>

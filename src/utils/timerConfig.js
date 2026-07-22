@@ -6,7 +6,7 @@
 export const MODES = {
   icebreaker: {
     id: 'icebreaker',
-    name: 'Icebreaker',
+    name: 'Rompehielos',
     maxSeconds: 360, // 6:00
     thresholds: {
       green:  240, // 4:00 — minimum time reached
@@ -30,7 +30,7 @@ export const MODES = {
 
   tableTopics: {
     id: 'tableTopics',
-    name: 'Table Topics',
+    name: 'Tópicos de mesa',
     maxSeconds: 120, // 2:00
     thresholds: {
       green:  60,  // 1:00

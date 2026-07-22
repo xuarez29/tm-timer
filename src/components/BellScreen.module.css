@@ -1,19 +1,14 @@
-/* ── Design tokens (shared with HomeScreen) ──────────────────────────────── */
+/* ── Screen ──────────────────────────────────────────────────────────────── */
 .screen {
-  --bg:            #0A0A0A;
-  --surface:       #141414;
-  --border:        rgba(255, 255, 255, 0.1);
-  --text-1:        #F0F0F0;
-  --text-2:        #666;
-  --accent:        #4F8FD0;
-
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
-  background-color: var(--bg);
-  color: var(--text-1);
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  height: 100dvh;
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: var(--navy);
+  color: var(--cream);
+  overflow: hidden;
 }
 
 /* ── Top bar ─────────────────────────────────────────────────────────────── */
@@ -21,27 +16,29 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 18px;
   gap: 12px;
+  padding: max(20px, env(safe-area-inset-top, 0px)) 20px 12px;
 }
 
-/* Same shape/size as TimerScreen's .topBtn, coloured for this screen's dark bg */
 .topBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px 14px;
-  color: var(--text-1);
-  font-size: 0.9rem;
-  font-weight: 600;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+  color: var(--cream);
   font-family: inherit;
   cursor: pointer;
   min-height: 42px;
-  min-width: 72px;
-  text-align: center;
   -webkit-tap-highlight-color: transparent;
   transition: opacity 0.1s;
-  white-space: nowrap;
+}
+
+.topBtn svg {
+  width: 18px;
+  height: 18px;
 }
 
 .topBtn:active {
@@ -49,14 +46,14 @@
 }
 
 .heading {
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: -0.1px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
 }
 
 /* Balances the back button so the heading stays centred */
 .spacer {
-  width: 68px;
+  width: 42px;
 }
 
 /* ── Main / big bell button ──────────────────────────────────────────────── */
@@ -67,93 +64,102 @@
   align-items: center;
   justify-content: center;
   gap: 26px;
-  padding: 24px;
+  padding: 20px;
+  min-height: 0;
 }
 
-/* ── Sound selector ──────────────────────────────────────────────────────── */
+/* ── Sound selector (icon-only segmented control) ────────────────────────── */
 .soundSelector {
   display: flex;
-  gap: 6px;
-  padding: 4px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  width: min(320px, 86%);
+  border: 1px solid var(--gold-40);
+  border-radius: var(--r-lg);
+  overflow: hidden;
 }
 
 .soundOption {
-  padding: 8px 14px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 0;
   background: transparent;
   border: none;
-  border-radius: 9px;
-  color: var(--text-2);
-  font-size: 0.8rem;
-  font-weight: 600;
-  font-family: inherit;
+  color: var(--muted);
   cursor: pointer;
-  white-space: nowrap;
+  font-family: inherit;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.12s, color 0.12s;
+}
+
+.soundOption + .soundOption {
+  border-left: 1px solid var(--line-strong);
+}
+
+.soundOption svg {
+  width: 22px;
+  height: 21px;
 }
 
 .soundOptionActive {
-  background: rgba(79, 143, 208, 0.18);
-  color: var(--accent);
+  background: var(--gold);
+  color: var(--navy);
 }
 
 .bellButton {
-  width: min(62vw, 260px);
-  height: min(62vw, 260px);
+  width: min(240px, 66vw);
+  aspect-ratio: 1;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(circle at 50% 36%,
-      rgba(79, 143, 208, 0.28),
-      rgba(79, 143, 208, 0.06) 68%),
-    var(--surface);
-  border: 1px solid rgba(79, 143, 208, 0.4);
-  color: var(--accent);
+    radial-gradient(circle at 50% 34%,
+      rgba(242, 193, 78, 0.30),
+      rgba(242, 193, 78, 0.06) 70%),
+    var(--navy-raised);
+  border: 1px solid var(--gold-50);
+  color: var(--gold);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   box-shadow:
-    0 0 0 1px rgba(79, 143, 208, 0.12),
-    0 14px 50px rgba(79, 143, 208, 0.16),
+    0 0 0 1px var(--gold-14),
+    0 14px 50px rgba(242, 193, 78, 0.18),
     0 4px 16px rgba(0, 0, 0, 0.5);
   transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .bellButton svg {
-  width: 44%;
-  height: 44%;
+  width: 42%;
+  height: 42%;
 }
 
 .bellButton:active {
   transform: scale(0.94);
-  color: #7fb4e6;
   box-shadow:
-    0 0 0 1px rgba(79, 143, 208, 0.5),
-    0 0 60px rgba(79, 143, 208, 0.4),
+    0 0 0 1px var(--gold-50),
+    0 0 60px rgba(242, 193, 78, 0.4),
     0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 .hint {
-  font-size: 0.85rem;
-  color: var(--text-2);
-  letter-spacing: 0.2px;
+  font-size: 14px;
+  color: var(--muted);
   text-align: center;
 }
 
 .counter {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: 0.3px;
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--gold);
+  text-align: center;
 }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 .footer {
-  padding: 20px 18px 28px;
+  flex: none;
+  padding: 18px 20px max(26px, env(safe-area-inset-bottom, 0px));
   display: flex;
   justify-content: center;
 }
@@ -163,18 +169,17 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 200px;
-  min-height: 58px;
+  min-width: 220px;
+  min-height: 56px;
   padding: 14px 16px;
-  background: rgba(79, 143, 208, 0.1);
-  border: 1px solid rgba(79, 143, 208, 0.44);
-  border-radius: 14px;
-  color: var(--accent);
-  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  background: var(--gold-14);
+  border: 1px solid var(--gold-50);
+  border-radius: var(--r-lg);
+  color: var(--gold);
+  font-size: 16px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  letter-spacing: 0.2px;
   -webkit-tap-highlight-color: transparent;
   transition: opacity 0.12s, transform 0.08s;
 }
@@ -187,4 +192,30 @@
 .resetBtn:disabled {
   opacity: 0.4;
   cursor: default;
+}
+
+/* ── Landscape (compact) ─────────────────────────────────────────────────── */
+@media (orientation: landscape) and (max-height: 500px) {
+  .screen {
+    max-width: 720px;
+  }
+  .main {
+    gap: 14px;
+    padding: 10px 20px;
+  }
+  .bellButton {
+    width: min(150px, 34vh);
+  }
+  .counter {
+    font-size: 24px;
+  }
+  .soundOption {
+    padding: 9px 0;
+  }
+  .footer {
+    padding: 10px 20px max(14px, env(safe-area-inset-bottom, 0px));
+  }
+  .resetBtn {
+    min-height: 46px;
+  }
 }

@@ -3,7 +3,7 @@
 // Strategy: Stale-While-Revalidate — serve from cache instantly, update async.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CACHE = 'tm-timer-v1';
+const CACHE = 'tm-timer-v2';
 
 // Pre-cache the app shell on install
 self.addEventListener('install', (event) => {

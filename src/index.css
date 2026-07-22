@@ -1,3 +1,138 @@
+/* ── Self-hosted fonts ──────────────────────────────────────────────────────
+   Bundled into public/fonts so the PWA keeps working fully offline (no
+   requests to Google Fonts). Archivo and Manrope are variable fonts — one
+   file per subset covers the whole weight range. Zilla Slab is static, so
+   only the two weights the UI actually uses are shipped.
+
+   All three families are SIL Open Font License 1.1. Copyright notices and
+   the full licence text live in public/fonts/OFL.txt — it must stay next to
+   the .woff2 files, since the OFL requires the licence to travel with them.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Archivo — the giant timer numerals */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/archivo-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+                 U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+                 U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/archivo-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Manrope — UI / body text */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/manrope-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+                 U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+                 U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/manrope-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Zilla Slab — headings, mode names, counters */
+@font-face {
+  font-family: 'Zilla Slab';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/zillaslab-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+                 U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+                 U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Zilla Slab';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/zillaslab-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Zilla Slab';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/zillaslab-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+                 U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+                 U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Zilla Slab';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/zillaslab-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── Design tokens ──────────────────────────────────────────────────────────
+   Toastmasters-inspired: deep navy ground, gold accent, warm cream text.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --navy:          #08192A;
+  --navy-raised:   #0D2233;
+
+  /* Accent */
+  --gold:          #F2C14E;
+  --gold-12:       rgba(242, 193, 78, 0.12);
+  --gold-14:       rgba(242, 193, 78, 0.14);
+  --gold-40:       rgba(242, 193, 78, 0.40);
+  --gold-50:       rgba(242, 193, 78, 0.50);
+  --blue:          #2C6E9B;
+
+  /* Text */
+  --cream:         #F4EDE2;
+  --muted:         #8399A8;
+  --muted-dim:     #5F7280;
+
+  /* Hairlines on the navy ground */
+  --line:          rgba(244, 237, 226, 0.10);
+  --line-strong:   rgba(244, 237, 226, 0.14);
+  --fill-soft:     rgba(244, 237, 226, 0.06);
+
+  /* Type */
+  --font-ui:       'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display:  'Zilla Slab', Georgia, serif;
+  --font-numeric:  'Archivo', system-ui, sans-serif;
+
+  /* Radii */
+  --r-md:          10px;
+  --r-lg:          12px;
+}
+
 /* ── Global reset & base styles ─────────────────────────────────────────── */
 
 *, *::before, *::after {
@@ -15,14 +150,9 @@ html {
 
 body {
   height: 100%;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    system-ui,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  background-color: var(--navy);
+  color: var(--cream);
+  font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;

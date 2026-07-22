@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Cronómetro Toastmasters">
+  <!-- Maskable variant: the platform crops this to its own shape (circle,
+       squircle, rounded square), so the navy must bleed to all four edges and
+       the mark must stay inside the safe zone — a centred circle of radius
+       40% (204px here). The clock's outer edge sits at 167px, well within it. -->
+  <rect width="512" height="512" fill="#08192A"/>
+
+  <g fill="none" stroke="#F2C14E" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="256" cy="256" r="150"/>
+    <polyline points="256,161 256,256 323,294"/>
+  </g>
+</svg>

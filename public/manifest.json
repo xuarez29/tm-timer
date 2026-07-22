@@ -1,12 +1,12 @@
 {
-  "name": "Toastmasters Timer",
-  "short_name": "TM Timer",
+  "name": "Cronómetro Toastmasters",
+  "short_name": "Cronómetro",
   "description": "Temporizador visual con colores para sesiones de Toastmasters",
   "start_url": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#08192A",
+  "theme_color": "#08192A",
   "lang": "es",
   "icons": [
     {
@@ -16,12 +16,21 @@
       "purpose": "any"
     },
     {
-      "src": "/icon.svg",
+      "src": "/icon-maskable.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "screenshots": [],
-  "categories": ["productivity", "utilities"]
+  "categories": [
+    "productivity",
+    "utilities"
+  ]
 }
