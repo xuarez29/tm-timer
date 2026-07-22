@@ -42,10 +42,26 @@ export const MODES = {
 };
 
 /**
+ * Durations too short for the standard ramp.
+ *
+ * The -2 min / -1 min offsets collapse onto zero below three minutes, which
+ * used to open a 1-minute slot on yellow and a 2-minute one on green. These
+ * two carry explicit thresholds instead.
+ */
+const SHORT_VARIABLE_THRESHOLDS = {
+  // A single minute has no room for three stages: it runs neutral, turns
+  // yellow at the halfway mark and red on time. Green never fires because it
+  // coincides with yellow, which getTimerState checks first.
+  60:  { green: 30, yellow: 30, red: 60,  blink: 90 },
+  // Two minutes mirrors the Table Topics preset exactly.
+  120: { green: 60, yellow: 90, red: 120, blink: 150 },
+};
+
+/**
  * Build a Variable mode config from a number of minutes.
- * Rules:
- *   green  = max - 2 min  (clamped to 0)
- *   yellow = max - 1 min  (clamped to 0)
+ * From 3 minutes up:
+ *   green  = max - 2 min
+ *   yellow = max - 1 min
  *   red    = max
  *   blink  = max + 30 s
  */
@@ -55,9 +71,9 @@ export function getVariableConfig(minutes) {
     id: 'variable',
     name: `Variable (${minutes} min)`,
     maxSeconds,
-    thresholds: {
-      green:  Math.max(0, maxSeconds - 120),
-      yellow: Math.max(0, maxSeconds - 60),
+    thresholds: SHORT_VARIABLE_THRESHOLDS[maxSeconds] ?? {
+      green:  maxSeconds - 120,
+      yellow: maxSeconds - 60,
       red:    maxSeconds,
       blink:  maxSeconds + 30,
     },
