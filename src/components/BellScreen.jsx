@@ -7,8 +7,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './BellScreen.module.css';
 
-const LS_KEY = 'tm-cronometro-v1';
-
 // ── Synthesised bell sounds ──────────────────────────────────────────────────
 // A metallic bell is inharmonic: we stack a few detuned partials with a sharp
 // attack and a long exponential decay to imitate the bright ring.
@@ -114,19 +112,12 @@ const SOUNDS = [
   { id: 'silence', label: 'Silencio',  Icon: SilenceIcon, play: null },
 ];
 
-const DEFAULT_SOUND = 'classic';
-
-/* Read the persisted sound once, before first paint, so the selector doesn't
-   flash the default. Anything unrecognised falls back to the default. */
-function loadSound() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(LS_KEY));
-    if (saved && SOUNDS.some((s) => s.id === saved.sound)) return saved.sound;
-  } catch {
-    /* unavailable or malformed (private mode, cleared storage) — use default */
-  }
-  return DEFAULT_SOUND;
-}
+/* The bell always opens on the classic desk bell, whatever was picked last
+   time. Switching sounds is a per-session choice: a club's Ah-Counter changes
+   hands between meetings, and whoever picks up the phone next should find the
+   familiar ring rather than inherit someone else's setting — Silencio in
+   particular would look identical to a broken bell. */
+export const DEFAULT_SOUND = 'classic';
 
 /* Build the AudioContext outside the component: on iOS, Web Audio defaults to
    the "ambient" session, so the phone's physical silent switch mutes it (it
@@ -165,10 +156,12 @@ const HomeIcon = () => (
   </svg>
 );
 
-export default function BellScreen({ onBack }) {
+/* `sound` and `onSoundChange` are owned by App, which stays mounted for the
+   whole session — so the pick survives walking over to the timer and back,
+   while a fresh app launch starts from DEFAULT_SOUND again. */
+export default function BellScreen({ onBack, sound: soundId, onSoundChange }) {
   const audioCtxRef = useRef(null);
   const [count, setCount] = useState(0);
-  const [soundId, setSoundId] = useState(loadSound);
 
   // Lazily create a single AudioContext, reused across taps
   const getCtx = () => {
@@ -207,12 +200,7 @@ export default function BellScreen({ onBack }) {
 
   // Selecting a sound previews it, so you can compare without counting
   const handleSelectSound = (id) => {
-    setSoundId(id);
-    try {
-      localStorage.setItem(LS_KEY, JSON.stringify({ sound: id }));
-    } catch {
-      /* storage unavailable — the choice just won't survive a reload */
-    }
+    onSoundChange(id);
     playSound(id);
   };
 
