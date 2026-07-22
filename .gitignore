@@ -29,3 +29,11 @@ pnpm-debug.log*
 
 # Claude Code internal
 .claude/launch.json
+.vercel
+.env*
+
+# Design prototype export — a 628 KB self-extracting bundle of base64 assets.
+# Everything it contained has been extracted into the repo already: the fonts
+# live in public/fonts/, and its logo turned out to be identical to
+# public/logo.png. Kept locally as a visual reference, not worth versioning.
+Design.html
