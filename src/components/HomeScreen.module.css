@@ -13,16 +13,23 @@
 }
 
 /* ── Hero ────────────────────────────────────────────────────────────────── */
+/* Sized to the wordmark's own footprint, not to how big the logo should look:
+   shrinking the logo alone (as a % of a fixed-height hero) never frees up
+   space for the mode list below it — only shrinking the hero itself does.
+   min/max are ~30% below their prior values for that reason, on top of the
+   ~25% the logo had already lost within its old box. */
 .hero {
   position: relative;
-  height: 29vh;
-  min-height: 172px;
-  max-height: 240px;
+  height: 20vh;
+  min-height: 120px;
+  max-height: 168px;
   flex: none;
   overflow: hidden;
 }
 
-/* Logo bleeds off the right edge; the scrim keeps the wordmark legible */
+/* Logo bleeds off the right edge; the scrim keeps the wordmark legible.
+   Its height stays a % of .hero, so it shrinks in lockstep with the hero
+   rather than needing its own separate tuning. */
 .heroLogo {
   position: absolute;
   top: 50%;
@@ -328,13 +335,20 @@
     padding: 6px 16px 0;
   }
   .row {
-    padding: 14px 4px;
+    padding: 11px 4px;
   }
   .rowName {
     font-size: 17px;
   }
   .footer {
-    padding: 14px 16px max(20px, env(safe-area-inset-bottom));
+    padding: 10px 16px max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Very short screens (older/smaller phones — iPhone SE 1st gen and similar) ─ */
+@media (max-height: 600px) {
+  .hero {
+    min-height: 100px;
   }
 }
 
@@ -344,8 +358,11 @@
     max-width: 720px;
   }
   .hero {
-    height: 22vh;
-    min-height: 96px;
+    height: 15vh;
+    /* Floor set by the wordmark's own two-line footprint at this font-size
+       (28px × 2 lines × 0.92 line-height + the rule under it + padding) —
+       below this the text clips at the top instead of the hero shrinking. */
+    min-height: 84px;
   }
   /* Scale the badge up so it still reads as a deliberate bleed rather than
      a logo that happens to be clipped mid-wordmark */
