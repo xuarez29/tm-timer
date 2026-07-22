@@ -59,14 +59,36 @@ export default function TimerScreen({ mode, onBack }) {
   const isBlink = timerState === 'blink';
 
   // ── Wake lock: keep screen on while timer is visible ──────────────────────
+  // Held for the whole screen, not just while running: the timekeeper sets the
+  // phone down before the speaker starts, and it must not sleep in between.
   useEffect(() => {
+    if (!('wakeLock' in navigator)) return;
+
+    let cancelled = false;
+
     const acquireWakeLock = async () => {
-      if ('wakeLock' in navigator) {
-        try {
-          wakeLockRef.current = await navigator.wakeLock.request('screen');
-        } catch {
-          /* silent — wake lock not granted (low battery, etc.) */
+      // Never stack locks — a live one already keeps the screen awake, and
+      // overwriting the ref would strand the previous one unreleased.
+      if (wakeLockRef.current) return;
+
+      try {
+        const lock = await navigator.wakeLock.request('screen');
+
+        // Unmounted while the request was in flight
+        if (cancelled) {
+          lock.release().catch(() => {});
+          return;
         }
+
+        wakeLockRef.current = lock;
+
+        // The browser drops the lock whenever the page hides; clear our handle
+        // so the next acquire isn't short-circuited by a dead one.
+        lock.addEventListener('release', () => {
+          if (wakeLockRef.current === lock) wakeLockRef.current = null;
+        });
+      } catch {
+        /* silent — wake lock not granted (low battery, etc.) */
       }
     };
 
@@ -79,8 +101,10 @@ export default function TimerScreen({ mode, onBack }) {
     document.addEventListener('visibilitychange', onVisibilityChange);
 
     return () => {
+      cancelled = true;
       document.removeEventListener('visibilitychange', onVisibilityChange);
-      wakeLockRef.current?.release();
+      wakeLockRef.current?.release().catch(() => {});
+      wakeLockRef.current = null;
     };
   }, []);
 
