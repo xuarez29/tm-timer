@@ -49,7 +49,7 @@ const FullscreenIcon = () => (
 );
 
 export default function TimerScreen({ mode, onBack }) {
-  const { elapsed, status, start, pause, resume, reset, stop } = useTimer();
+  const { elapsed, status, start, pause, resume, reset } = useTimer();
   const wakeLockRef = useRef(null);
   const [hideNumbers, setHideNumbers] = useState(false);
   const [showFullscreen] = useState(isDesktop);
@@ -92,12 +92,6 @@ export default function TimerScreen({ mode, onBack }) {
       document.exitFullscreen?.().catch(() => {});
     }
   }, []);
-
-  // ── Stop timer and return to menu ─────────────────────────────────────────
-  const handleFinish = () => {
-    stop();
-    onBack();
-  };
 
   const handleReset = () => {
     setHideNumbers(false);
@@ -220,7 +214,7 @@ export default function TimerScreen({ mode, onBack }) {
         <button
           className={`${styles.btn} ${styles.btnWide}`}
           style={{ color: text, borderColor: `${text}44`, background: `${text}10` }}
-          onClick={handleFinish}
+          onClick={onBack}
         >
           ✕ Terminar
         </button>
