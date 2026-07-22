@@ -111,19 +111,20 @@ export default function HomeScreen({ onSelectMode, onOpenBell }) {
   return (
     <div className={styles.screen}>
 
-      {/* ── Hero: logo bleeding off the right edge, wordmark over it ── */}
+      {/* ── Hero: wordmark and logo as a single lockup, bottom-aligned ── */}
       <header className={styles.hero}>
-        <img src="/logo.png" alt="Toastmasters International" className={styles.heroLogo} />
-        <div className={styles.heroScrim} aria-hidden="true" />
-        <div className={styles.heroContent}>
-          <h1 className={styles.wordmark} aria-label="Cronómetro">
-            <span aria-hidden="true">
-              Cronó<br />
-              <span className={styles.wordmarkAccent}>metr</span>
-              <span className={styles.wordmarkClock}><WordmarkClock /></span>
-            </span>
-          </h1>
-          <span className={styles.heroRule} aria-hidden="true" />
+        <div className={styles.heroLockup}>
+          <div className={styles.heroText}>
+            <h1 className={styles.wordmark} aria-label="Cronómetro">
+              <span aria-hidden="true">
+                Cronó<br />
+                <span className={styles.wordmarkAccent}>metr</span>
+                <span className={styles.wordmarkClock}><WordmarkClock /></span>
+              </span>
+            </h1>
+            <span className={styles.heroRule} aria-hidden="true" />
+          </div>
+          <img src="/logo.png" alt="Toastmasters International" className={styles.heroLogo} />
         </div>
       </header>
 
