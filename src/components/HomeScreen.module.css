@@ -28,7 +28,7 @@
   top: 50%;
   right: -4%;
   transform: translateY(-50%);
-  height: 118%;
+  height: 88%;
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.55));
@@ -350,7 +350,7 @@
   /* Scale the badge up so it still reads as a deliberate bleed rather than
      a logo that happens to be clipped mid-wordmark */
   .heroLogo {
-    height: 190%;
+    height: 142%;
     right: -8%;
   }
   .heroContent {
