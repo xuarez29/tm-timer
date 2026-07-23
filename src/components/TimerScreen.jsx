@@ -3,6 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef, useCallback, useState } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { KeepAwake } from '@capacitor-community/keep-awake';
 import { getTimerState, formatTime } from '../utils/timerConfig';
 import { useTimer } from '../hooks/useTimer';
 import styles from './TimerScreen.module.css';
@@ -62,6 +64,15 @@ export default function TimerScreen({ mode, onBack }) {
   // Held for the whole screen, not just while running: the timekeeper sets the
   // phone down before the speaker starts, and it must not sleep in between.
   useEffect(() => {
+    // Native iOS/Android shells: WKWebView doesn't expose the Screen Wake
+    // Lock API, so route through the native idle-timer instead.
+    if (Capacitor.isNativePlatform()) {
+      KeepAwake.keepAwake().catch(() => {});
+      return () => {
+        KeepAwake.allowSleep().catch(() => {});
+      };
+    }
+
     if (!('wakeLock' in navigator)) return;
 
     let cancelled = false;
